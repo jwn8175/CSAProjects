@@ -6,10 +6,9 @@ import Utilities.GDV5;
 
 public class SpaceFighter extends GDV5 {
 	
-	Ship ship = new Ship();
+	static Ship ship = new Ship();
 	Space space = new Space();
-	Enemy be1 = new BasicEnemy();
-	Enemy ae1 = new AdvancedEnemy();
+	Mothership mother = new Mothership();
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -24,10 +23,7 @@ public class SpaceFighter extends GDV5 {
 		// TODO Auto-generated method stub
 		
 		space.update(this.getHeight());
-		
-		be1.update();
-		ae1.update();
-		
+		mother.update();
 		
 		ship.move();
 		
@@ -38,10 +34,7 @@ public class SpaceFighter extends GDV5 {
 		// TODO Auto-generated method stub
 		
 		space.draw(win);
-		
-		be1.draw(win);
-		ae1.draw(win);
-		
+		mother.draw(win);
 		
 		ship.draw(win);
 		

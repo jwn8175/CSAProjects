@@ -30,12 +30,15 @@ public class BasicEnemy extends Enemy {
 	
 	public void draw(Graphics2D win) {
 		
-		AffineTransform previous = win.getTransform();                  // current rotation
+		// current rotation
+		AffineTransform previous = win.getTransform();
 		
-		win.rotate(theta,  this.getCenterX(), this.getCenterY());		// rotates pen
+		// rotates pen
+		win.rotate(theta,  this.getCenterX(), this.getCenterY());
 		super.draw(win);
 		
-		win.setTransform(previous);										// rotate to previous
+		// rotate to previous
+		win.setTransform(previous);
 		
 	}
 

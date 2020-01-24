@@ -16,6 +16,9 @@ public class Ship extends Polygon {
 	int dx = 0, dy = 0, speed = 5;
 	Polygon layer1 = new Polygon();
 	Polygon layer2 = new Polygon();
+	
+	Laser laser = new Laser();
+	
 	double[][][] points = {
 			
 			{ {4, 0, 4, 8}, {0, 3, 2, 3} },    // base
