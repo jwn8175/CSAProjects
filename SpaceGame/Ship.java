@@ -56,15 +56,30 @@ public class Ship extends Polygon {
 		dx = 0;
 		dy = 0;
 		
-		if (GDV5.KeysPressed[KeyEvent.VK_D]) dx = speed;
-		if (GDV5.KeysPressed[KeyEvent.VK_A]) dx = -speed;
-		if (GDV5.KeysPressed[KeyEvent.VK_S]) dy = speed;
-		if (GDV5.KeysPressed[KeyEvent.VK_W]) dy = -speed;
+		if (GDV5.KeysPressed[KeyEvent.VK_D]) {
+			dx = (int) (speed * Math.cos(theta));
+			dy = (int) (speed * Math.sin(theta));
+		};
+		if (GDV5.KeysPressed[KeyEvent.VK_A]) {
+			dx = (int) (-speed * Math.cos(theta));
+			dy = (int) (-speed * Math.sin(theta));
+		};
+		if (GDV5.KeysPressed[KeyEvent.VK_S]) {
+			dx = (int) (-speed * Math.sin(theta));
+			dy = (int) (speed * Math.cos(theta));
+		};
+		if (GDV5.KeysPressed[KeyEvent.VK_W]) {
+			dx = (int) (speed * Math.sin(theta));
+			dy = (int) (-speed * Math.cos(theta));
+		};
 		
 		if (GDV5.KeysPressed[KeyEvent.VK_RIGHT]) theta += dtheta;
 		if (GDV5.KeysPressed[KeyEvent.VK_LEFT]) theta -= dtheta;
 		
 		this.theta %= (Math.PI * 2);
+		
+		// dx = (int) (dx * Math.cos(theta));
+		// dy = (int) (dy * Math.sin(theta));
 		
 		this.translate(dx, dy);
 		layer1.translate(dx, dy);
