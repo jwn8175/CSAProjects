@@ -9,9 +9,7 @@ public class Mothership {
 	int index = 0;
 	
 	public Mothership() {
-		
-		
-		
+
 	}
 	
 	public void update() {
