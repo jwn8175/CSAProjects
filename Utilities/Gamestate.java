@@ -3,10 +3,12 @@ package Utilities;
 public class Gamestate {
 	
 	private int state;
+	// private int maxState;
 	private boolean settable = true;
 	
 	public Gamestate() {
 		this.state = 0;
+		// this.maxState = max;
 		this.settable = true;
 	}
 	
@@ -14,8 +16,8 @@ public class Gamestate {
 		this.state = a;
 	}
 	
-	public void setSettable() {
-		this.settable = !this.settable;
+	public void setSettable(boolean b) {
+		this.settable = b;
 	}
 	
 	public int getState() {
