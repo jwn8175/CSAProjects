@@ -13,6 +13,8 @@ public class AdvancedEnemy extends Enemy {
 	
 	public AdvancedEnemy() {
 		
+		this.hp = 2;
+		
 		this.dy = this.speed;
 		this.c = Color.CYAN;
 		
@@ -54,7 +56,7 @@ public class AdvancedEnemy extends Enemy {
 		AffineTransform previous = win.getTransform();
 				
 		// rotates pen
-		win.rotate(angle,  this.getCenterX(), this.getCenterY());
+		win.rotate(angle, this.getCenterX(), this.getCenterY());
 		super.draw(win);
 				
 		// rotate to previous

@@ -9,13 +9,26 @@ public class BasicEnemy extends Enemy {
 	double dtheta = Math.PI/30;
 	double theta = Math.PI/2;
 	
+	// boolean isFalling = true;
+	
 	public BasicEnemy() {
 		
+		this.hp = 1;
 		this.dy = this.speed;
 		
 		Random r= new Random();
 		int newX = r.nextInt(600) + 100;
 		this.setLocation(newX, -this.height);
+		
+	}
+	
+	public BasicEnemy(int newX) {
+		
+		this.hp = 1;
+		this.dy = this.speed;
+		
+		this.setLocation(newX, -this.height);
+		// System.out.println("This happened.");
 		
 	}
 	

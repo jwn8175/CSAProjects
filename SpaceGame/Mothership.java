@@ -4,50 +4,55 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 public class Mothership {
-	
-	Enemy[] bois = new Enemy[100];
+
+	Enemy[] one = new Enemy[20];
+	Enemy[] badGuys;
 	int index = 0;
-	
-	public Mothership() {
+	int maxAdv = 10;
+	int adv = 0;
+
+	public Mothership() {  
 
 	}
 	
-	public void update() {
+	public Mothership(int code) {
 		
-		// spawner
-		if (Math.random() > 0.9) {
-			
-			Enemy e = null;
-			if (Math.random() > 0.5) {
-				e = new AdvancedEnemy();
-			} else {
-				e = new BasicEnemy();
+		if (code == 1) {
+			this.badGuys = new Enemy[20];
+			for (int i = 100; i <= 700; i += 75) {
+				Enemy e = new BasicEnemy(i);
+
+				if (badGuys[index] == null) badGuys[index] = e;
+				index++;
+				index %= badGuys.length;
 			}
-			
-			bois[index] = e;
-			index++;
-			index %= bois.length;
-			
+			System.out.println("This happened.");
 		}
 		
+	}
+
+	public void update() {
+	
 		// movement
-		for (int i = 0; i < bois.length; i++) {
-			
-			Enemy e = bois[i];
-			if(e != null) e.update();
-			
+		for (int i = 0; i < badGuys.length; i++) {
+
+			Enemy e = badGuys[i];
+			if (e != null) e.update();
+
 		}
-		
+
 	}
-	
+
 	public void draw(Graphics2D win) {
-		
-		for (Enemy e : bois) {
-			
-			if (e != null) e.draw(win);
-			
+
+		for (int i = 0; i < badGuys.length; i++) {
+			Enemy e = badGuys[i];
+			if (e != null) {
+				e.draw(win);
+				// System.out.println("This happened.");
+			}
 		}
-		
+
 	}
-	
+
 }
