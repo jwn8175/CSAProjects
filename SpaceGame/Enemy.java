@@ -25,6 +25,7 @@ public class Enemy extends Rectangle {
 	public void update() {
 		
 		this.translate(dx, dy);
+		if (this.hp <= 0) this.dying = true;
 		
 	}
 	
@@ -35,12 +36,13 @@ public class Enemy extends Rectangle {
 			win.fill(this);
 			win.setColor(Color.WHITE);
 			win.draw(this);
-		} else if (this.hp != 0 ) {
+		} else if (this.hp != 0) {
 			win.drawImage(image, null, this.x, this.y);
 		}
 		
-		if (this.dying = true) {
+		if (this.dying) {
 			boom.draw(win);
+			System.out.println("Particle Drawing.");
 		}
 		
 	}
@@ -50,6 +52,10 @@ public class Enemy extends Rectangle {
 		this.dying = true;
 		this.boom.update();
 		
+	}
+	
+	public int getHp() {
+		return this.hp;
 	}
 	
 }

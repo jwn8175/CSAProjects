@@ -21,7 +21,7 @@ public class Mothership {
 			this.badGuys = new Enemy[20];
 			for (int i = 100; i <= 700; i += 75) {
 				Enemy e = new BasicEnemy(i);
-
+				
 				if (badGuys[index] == null) badGuys[index] = e;
 				index++;
 				index %= badGuys.length;

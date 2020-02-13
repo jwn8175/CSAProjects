@@ -15,7 +15,7 @@ public class Ship extends Polygon {
 	// fields
 
 	int dx = 0, dy = 0, speed = 5, lives = 3;
-	Laser[] lasers = new Laser[50];
+	Laser[] lasers = new Laser[10];
 	int laserIndex = 0;
 	Polygon layer1 = new Polygon();
 	Polygon layer2 = new Polygon();
@@ -60,9 +60,6 @@ public class Ship extends Polygon {
 		for (int i = 0; i < lasers.length; i++) {
 			if (lasers[i] != null) {
 				lasers[i].move();
-				if ((lasers[i].getX() > 800 || lasers[i].getX() < 0) && (lasers[i].getY() > 600 || lasers[i].getY() < 0)) {
-					lasers[i] = null;
-				};
 			}
 		}
 		
@@ -141,7 +138,7 @@ public class Ship extends Polygon {
 		for (int i = 0; i < lasers.length; i++) {
 			if (lasers[i] == null) {
 				lasers[i] = tempLaser;
-				// System.out.println("This Happened");
+				System.out.println("This Happened");
 				return;
 			}
 		}
@@ -167,9 +164,9 @@ public class Ship extends Polygon {
 	
 	public void hit(Enemy e) {
 		
-		for (Laser i : lasers) {
-			if (i != null && i.intersects(e)) e.hp--;
-			i = null;
+		for (int i = 0; i < lasers.length; i++) {
+			if (lasers[i] != null && lasers[i].intersects(e)) e.hp--;
+			lasers[i] = null;
 		}
 	
 	}

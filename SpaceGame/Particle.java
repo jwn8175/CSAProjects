@@ -41,7 +41,7 @@ public class Particle extends Rectangle {
 		
 		win.setColor(c);
 		win.fill(this);
-
+		
 	}
 	
 	public void setParticleColor(Color color) {

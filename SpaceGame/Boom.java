@@ -8,18 +8,18 @@ public class Boom {
 	
 	public Boom(Enemy e) {
 		
-		for (Particle p : parts) {
-			p = new Particle((int) e.getCenterX(), (int) e.getCenterY());
+		for (int i = 0; i < parts.length; i++) {
+			parts[i] = new Particle((int) e.getCenterX(), (int) e.getCenterY());
 		}
 		
 	}
 	
 	public void update() {
 		
-		for (Particle p : parts) {
-			if (p != null) {
-				p.move();
-				if (p.getY() > 600) p = null;
+		for (int i = 0; i < parts.length; i++) {
+			if (parts[i] != null) {
+				parts[i].move();
+				if (parts[i].getY() > 600) parts[i] = null;
 			}
 		}
 		

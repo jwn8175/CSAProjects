@@ -14,9 +14,7 @@ public class SpaceFighter extends GDV5 {
 
 	static Ship ship = new Ship();
 	Space space = new Space();
-	// Mothership mother = new Mothership();
 	Mothership levelOne = new Mothership(1);
-	// Laser laser = new Laser(ship.getBounds().getCenterX(), ship.getBounds().getCenterY(), ship.theta);
 	Laser laser;
 	
 	public static void main(String[] args) {
@@ -54,6 +52,8 @@ public class SpaceFighter extends GDV5 {
 			levelOne.update();
 			ship.update();
 		}
+		
+		this.cleanUp();
 
 	}
 
@@ -79,7 +79,18 @@ public class SpaceFighter extends GDV5 {
 	public void cleanUp() {
 		
 		// gets rid of lasers, enemies, etc that are not needed anymore
-		
+		for (int i = 0; i < ship.lasers.length; i++) {
+			if (ship.lasers[i] != null) {
+				if (ship.lasers[i].getX() > 800 || ship.lasers[i].getX() < 0 || ship.lasers[i].getY() < 0 || ship.lasers[i].getY() > 600) {
+					ship.lasers[i] = null;
+					System.out.println("Laser Gone.");
+				}
+			}
+		}
+		for (int j = 0; j < levelOne.badGuys.length; j++) {
+			if (levelOne.badGuys[j] != null && levelOne.badGuys[j].getHp() <= 0) levelOne.badGuys[j] = null;
+		}
+			
 	}
 	
 }
