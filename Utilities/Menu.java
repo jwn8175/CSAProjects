@@ -15,19 +15,16 @@ public class Menu {
 	String title;
 	String instructions;
 	String author = "Game by Jay Ni";
-	String lives;
-	String points;
+	String replay = "Press Enter to Play Again";
 	
 	public Menu() {
-		
 		
 	}
 	
 	public Menu(String title, String ins, int lives, int points) {
 		this.title = title;
 		this.instructions = ins;
-		this.lives = Integer.toString(lives);
-		this.points = Integer.toString(points);
+
 	}
 	
 	public void setTitle(String title) {
@@ -51,6 +48,15 @@ public class Menu {
 		this.drawCenteredString(win, this.title, titleFont, 200);
 		this.drawCenteredString(win, this.author, subFont, 220);
 		this.drawCenteredString(win, this.instructions, insFont, 280);
+		
+	}
+	
+	public void printEndScreen(Graphics2D win, int points) {
+		win.setColor(Color.WHITE);
+		this.drawCenteredString(win, "Game Over", titleFont, 250);
+		this.drawCenteredString(win, "Your Score: " + points, insFont, 310);
+		this.drawCenteredString(win, replay, insFont, 350);
+		
 	}
 	
 }
