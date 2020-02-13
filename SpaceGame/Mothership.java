@@ -26,7 +26,7 @@ public class Mothership {
 				index++;
 				index %= badGuys.length;
 			}
-			System.out.println("This happened.");
+			// System.out.println("This happened.");
 		}
 		
 	}
@@ -35,10 +35,8 @@ public class Mothership {
 	
 		// movement
 		for (int i = 0; i < badGuys.length; i++) {
-
 			Enemy e = badGuys[i];
 			if (e != null) e.update();
-
 		}
 
 	}

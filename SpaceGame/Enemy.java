@@ -9,12 +9,16 @@ public class Enemy extends Rectangle {
 	
 	int dx, dy, speed = 5;
 	int hp;
+	double theta;
+	boolean dying = false;
 	Color c = Color.RED;
+	Boom boom;
 	BufferedImage image;
 	
 	public Enemy() {
 		
 		super(0, 0, 10, 10);
+		boom = new Boom(this);
 		
 	}
 	
@@ -26,12 +30,25 @@ public class Enemy extends Rectangle {
 	
 	public void draw(Graphics2D win) {
 		
-		if (image == null) {
+		if (image == null && this.hp != 0) {
 			win.setColor(c);
 			win.fill(this);
-		} else {
+			win.setColor(Color.WHITE);
+			win.draw(this);
+		} else if (this.hp != 0 ) {
 			win.drawImage(image, null, this.x, this.y);
 		}
+		
+		if (this.dying = true) {
+			boom.draw(win);
+		}
+		
+	}
+	
+	public void deathAnimation() {
+		
+		this.dying = true;
+		this.boom.update();
 		
 	}
 	

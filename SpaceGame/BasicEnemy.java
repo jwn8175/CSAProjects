@@ -17,12 +17,14 @@ public class BasicEnemy extends Enemy {
 		this.dy = this.speed;
 		
 		Random r= new Random();
-		int newX = r.nextInt(600) + 100;
+		int newX = r.nextInt(600) + 80;
 		this.setLocation(newX, -this.height);
 		
 	}
 	
 	public BasicEnemy(int newX) {
+		
+		this.setSize(30, 30);
 		
 		this.hp = 1;
 		this.dy = this.speed;
@@ -34,24 +36,28 @@ public class BasicEnemy extends Enemy {
 	
 	public void update() {
 		
-		super.update();
+		if (this.getY() < 125) {
+			super.update();
+		} else {
+			this.dy = 0;
+		}
 		
-		this.theta += this.dtheta;
-		this.theta %= (Math.PI * 2);
+		// this.theta += this.dtheta;
+		// this.theta %= (Math.PI * 2);
 		
 	}
 	
 	public void draw(Graphics2D win) {
 		
 		// current rotation
-		AffineTransform previous = win.getTransform();
+		// AffineTransform previous = win.getTransform();
 		
 		// rotates pen
-		win.rotate(theta,  this.getCenterX(), this.getCenterY());
+		// win.rotate(theta,  this.getCenterX(), this.getCenterY());
 		super.draw(win);
 		
 		// rotate to previous
-		win.setTransform(previous);
+		// win.setTransform(previous);
 		
 	}
 

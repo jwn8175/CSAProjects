@@ -3,8 +3,10 @@ package SpaceGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 import Utilities.GDV5;
 
@@ -13,6 +15,7 @@ public class Ship extends Polygon {
 	// fields
 
 	int dx = 0, dy = 0, speed = 5, lives = 3;
+	Laser[] lasers = new Laser[50];
 	int laserIndex = 0;
 	Polygon layer1 = new Polygon();
 	Polygon layer2 = new Polygon();
@@ -31,18 +34,18 @@ public class Ship extends Polygon {
 	// constructors
 	public Ship() {
 
-		double scale = 20;
+		double scale = 15;
 
 		for (int i = 0; i < points[0][0].length; i++) {
-			this.addPoint((int) (points[0][0][i] * scale), (int) (points[0][1][i] * scale));
+			this.addPoint((int) (points[0][0][i] * scale + 320), (int) (points[0][1][i] * scale + 500));
 		}
 
 		for (int i = 0; i < points[1][0].length; i++) {
-			layer1.addPoint((int) (points[1][0][i] * scale), (int) (points[1][1][i] * scale));
+			layer1.addPoint((int) (points[1][0][i] * scale + 320), (int) (points[1][1][i] * scale + 500));
 		}
 
 		for (int i = 0; i < points[2][0].length; i++) {
-			layer2.addPoint((int) (points[2][0][i] * scale), (int) (points[2][1][i] * scale));
+			layer2.addPoint((int) (points[2][0][i] * scale + 320), (int) (points[2][1][i] * scale + 500));
 		}
 
 	}
@@ -50,16 +53,32 @@ public class Ship extends Polygon {
 	public void update() {
 
 		// System.out.println(points.length); // is 3
-
-		this.move();
+		if (GDV5.KeysTyped[KeyEvent.VK_SPACE]) {
+			this.makeLaser();
+			GDV5.KeysTyped[KeyEvent.VK_SPACE] = false;
+		}
+		for (int i = 0; i < lasers.length; i++) {
+			if (lasers[i] != null) {
+				lasers[i].move();
+				if ((lasers[i].getX() > 800 || lasers[i].getX() < 0) && (lasers[i].getY() > 600 || lasers[i].getY() < 0)) {
+					lasers[i] = null;
+				};
+			}
+		}
 		
+		this.move();
+
 	}
 
 	public void draw(Graphics2D win) {
 
 		AffineTransform previous = win.getTransform();
-		win.rotate(theta,  this.getBounds().getCenterX(), this.getBounds().getCenterY());
-
+		win.rotate(theta, this.getHitBox().getCenterX(), this.getHitBox().getCenterY());
+		
+		win.setColor(Color.RED);
+		// win.draw(SpaceFighter.ship.getHitBox());
+		for (Rectangle r : this.getHurtBox()) win.draw(r);
+		
 		win.setColor(Color.BLUE);
 		win.fill(this);
 
@@ -68,16 +87,30 @@ public class Ship extends Polygon {
 
 		win.setColor(Color.MAGENTA);
 		win.fill(layer2);
+		
+		win.setColor(Color.WHITE);
+		win.draw(this);
+		win.draw(layer2);
 
 		win.setTransform(previous);
-		
+
+		for (int i = 0; i < lasers.length; i++) {
+			if (lasers[i] != null) lasers[i].draw(win);
+		}
+
 	}
 
 	public void move() {
 
 		dx = 0;
 		dy = 0;
-
+		
+		/*
+		if (GDV5.KeysPressed[KeyEvent.VK_S]) {
+			dx = (int) (-speed * Math.sin(theta));
+			dy = (int) (speed * Math.cos(theta));
+		};
+		*/
 		if (GDV5.KeysPressed[KeyEvent.VK_A]) {
 			dx = (int) (-speed * Math.cos(theta));
 			dy = (int) (-speed * Math.sin(theta));
@@ -90,10 +123,6 @@ public class Ship extends Polygon {
 			dx = (int) (speed * Math.sin(theta));
 			dy = (int) (-speed * Math.cos(theta));
 		};
-		if (GDV5.KeysPressed[KeyEvent.VK_S]) {
-			dx = (int) (-speed * Math.sin(theta));
-			dy = (int) (speed * Math.cos(theta));
-		};
 
 		if (GDV5.KeysPressed[KeyEvent.VK_RIGHT]) theta += dtheta;
 		if (GDV5.KeysPressed[KeyEvent.VK_LEFT]) theta -= dtheta;
@@ -105,14 +134,44 @@ public class Ship extends Polygon {
 		layer2.translate(dx, dy);
 
 	}
-/*
-	public void hit() {
-		for (int i = 0; i < lasers.length; i++) {
-			if (lasers[i] != null) {
-				if (lasers[i].getBounds2D().intersects(r)))
 
+	public void makeLaser() {
+
+		Laser tempLaser = new Laser();
+		for (int i = 0; i < lasers.length; i++) {
+			if (lasers[i] == null) {
+				lasers[i] = tempLaser;
+				// System.out.println("This Happened");
+				return;
 			}
 		}
+
 	}
-*/
+	
+	public Rectangle getHitBox() {	
+		// this is to get the center of the ship for lasers, etc
+		return new Rectangle((int) SpaceFighter.ship.getBounds().getCenterX() - 60, (int) SpaceFighter.ship.layer2.getBounds().getCenterY() - 60, 120, 120);
+	}
+	
+	public Rectangle[] getHurtBox() {
+		
+		// this is for ship collisions like getting hit
+		Rectangle[] hurtBox = new Rectangle[2];
+		hurtBox[0] = new Rectangle((int) this.getBounds().getX(), (int) (this.getBounds().getY() + 20), (int) this.getBounds().getWidth(), (int) (this.getBounds().getHeight() - 3));
+		// hurtBox[1] = layer1.getBounds();
+		hurtBox[1] = layer2.getBounds();
+		
+		return hurtBox;
+		
+	}
+	
+	public void hit(Enemy e) {
+		
+		for (Laser i : lasers) {
+			if (i != null && i.intersects(e)) e.hp--;
+			i = null;
+		}
+	
+	}
+	
 }
