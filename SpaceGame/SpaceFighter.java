@@ -83,13 +83,17 @@ public class SpaceFighter extends GDV5 {
 			if (ship.lasers[i] != null) {
 				if (ship.lasers[i].getX() > 800 || ship.lasers[i].getX() < 0 || ship.lasers[i].getY() < 0 || ship.lasers[i].getY() > 600) {
 					ship.lasers[i] = null;
-					System.out.println("Laser Gone.");
+					// System.out.println("Laser Gone");
 				}
 			}
 		}
+		
+		// add after level progression is implemented
+		/*
 		for (int j = 0; j < levelOne.badGuys.length; j++) {
 			if (levelOne.badGuys[j] != null && levelOne.badGuys[j].getHp() <= 0) levelOne.badGuys[j] = null;
 		}
+		*/
 			
 	}
 	

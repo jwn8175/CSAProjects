@@ -36,12 +36,12 @@ public class BasicEnemy extends Enemy {
 	
 	public void update() {
 		
-		if (this.getY() < 125) {
-			super.update();
-		} else {
+		if (this.getY() > 125) {
 			this.dy = 0;
 		}
 		
+		// super.hit();
+		super.update();
 		// this.theta += this.dtheta;
 		// this.theta %= (Math.PI * 2);
 		
@@ -54,10 +54,11 @@ public class BasicEnemy extends Enemy {
 		
 		// rotates pen
 		// win.rotate(theta,  this.getCenterX(), this.getCenterY());
-		super.draw(win);
 		
 		// rotate to previous
 		// win.setTransform(previous);
+		
+		super.draw(win);
 		
 	}
 

@@ -18,7 +18,7 @@ public class Mothership {
 	public Mothership(int code) {
 		
 		if (code == 1) {
-			this.badGuys = new Enemy[20];
+			this.badGuys = new Enemy[8];
 			for (int i = 100; i <= 700; i += 75) {
 				Enemy e = new BasicEnemy(i);
 				

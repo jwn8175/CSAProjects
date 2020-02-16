@@ -10,10 +10,12 @@ public class Particle extends Rectangle {
 	double dx, dy;
 
 	static int size = 3;
-	int radius = 5;
-	double gravity = 1;
+	double range;
+	double startY, startX;
+	double radius = 1.5;
+	double mod = .1;
 
-	Color c = Color.WHITE;
+	Color c = Color.RED;
 	
 	// thruster constructor
 	public Particle() {
@@ -27,12 +29,26 @@ public class Particle extends Rectangle {
 		Random r = new Random();
 		dx = radius * r.nextGaussian();
 		dy = radius * r.nextGaussian();
+		this.range = 1500;
+		this.startY = y;
+		this.startX = x;
 		
 	}
 
 	public void move() {
 		
-		dy += gravity;
+		if (this.dy > 0) {
+			dy += mod;
+		} else if (this.dy < 0) {
+			dy -= mod;
+		}
+		if (this.dx > 0) {
+			dx += mod;
+		} else if (this.dy < 0) {
+			dx -= mod;
+		}
+		
+		if (!this.circleCheck(range/3)) c = c.darker();
 		this.translate((int) dx, (int) dy);
 
 	}
@@ -40,7 +56,7 @@ public class Particle extends Rectangle {
 	public void draw(Graphics2D win) {
 		
 		win.setColor(c);
-		win.fill(this);
+		if (this.circleCheck(this.range)) win.fill(this);
 		
 	}
 	
@@ -48,6 +64,8 @@ public class Particle extends Rectangle {
 		this.c = color;
 	}
 
-
+	public boolean circleCheck(double r) {
+		return (Math.pow(this.getCenterX() - this.startX, 2) + (Math.pow(this.getCenterY() - this.startY, 2)) < (r));
+	}
 
 }

@@ -6,7 +6,6 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 
 import Utilities.GDV5;
 
@@ -138,7 +137,7 @@ public class Ship extends Polygon {
 		for (int i = 0; i < lasers.length; i++) {
 			if (lasers[i] == null) {
 				lasers[i] = tempLaser;
-				System.out.println("This Happened");
+				// System.out.println("This Happened");
 				return;
 			}
 		}
@@ -160,15 +159,6 @@ public class Ship extends Polygon {
 		
 		return hurtBox;
 		
-	}
-	
-	public void hit(Enemy e) {
-		
-		for (int i = 0; i < lasers.length; i++) {
-			if (lasers[i] != null && lasers[i].intersects(e)) e.hp--;
-			lasers[i] = null;
-		}
-	
 	}
 	
 }
