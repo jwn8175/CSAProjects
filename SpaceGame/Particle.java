@@ -56,7 +56,7 @@ public class Particle extends Rectangle {
 	public void draw(Graphics2D win) {
 		
 		win.setColor(c);
-		if (this.circleCheck(this.range)) win.fill(this);
+		win.fill(this);
 		
 	}
 	

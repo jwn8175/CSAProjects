@@ -52,7 +52,7 @@ public class Enemy extends Rectangle {
 
 		if (this.dying) {
 			boom.draw(win);
-			// System.out.println("Particle Drawing.");
+			System.out.println("Particle Drawing.");
 		}
 
 	}

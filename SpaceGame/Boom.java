@@ -30,7 +30,11 @@ public class Boom {
 	public void draw(Graphics2D win) {
 		
 		for (Particle p : parts) {
-			if (p != null) p.draw(win);
+			if (p != null && p.circleCheck(p.range)) {
+				p.draw(win);
+			} else {
+				p = null;
+			}
 		}
 		
 	}
