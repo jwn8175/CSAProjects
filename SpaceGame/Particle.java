@@ -29,7 +29,7 @@ public class Particle extends Rectangle {
 		Random r = new Random();
 		dx = radius * r.nextGaussian();
 		dy = radius * r.nextGaussian();
-		this.range = 1500;
+		this.range = size * 1000;
 		this.startY = y;
 		this.startX = x;
 		

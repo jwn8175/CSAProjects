@@ -10,6 +10,7 @@ public class Mothership {
 	int index = 0;
 	int maxAdv = 10;
 	int adv = 0;
+	int pointsValue = 50;
 
 	public Mothership() {  
 

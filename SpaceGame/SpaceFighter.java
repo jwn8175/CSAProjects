@@ -10,9 +10,8 @@ public class SpaceFighter extends GDV5 {
 
 	int gameState;
 	int points;
-	Menu menu = new Menu();
-
 	static Ship ship = new Ship();
+	Menu menu = new Menu();
 	Space space = new Space();
 	Mothership levelOne = new Mothership(1);
 	Laser laser;
@@ -75,10 +74,10 @@ public class SpaceFighter extends GDV5 {
 		}
 
 	}
-
+	
+	// gets rid of lasers, enemies, etc that are not needed anymore
 	public void cleanUp() {
 		
-		// gets rid of lasers, enemies, etc that are not needed anymore
 		for (int i = 0; i < ship.lasers.length; i++) {
 			if (ship.lasers[i] != null) {
 				if (ship.lasers[i].getX() > 800 || ship.lasers[i].getX() < 0 || ship.lasers[i].getY() < 0 || ship.lasers[i].getY() > 600) {
@@ -87,13 +86,10 @@ public class SpaceFighter extends GDV5 {
 				}
 			}
 		}
-		
-		// add after level progression is implemented
-		/*
+				
 		for (int j = 0; j < levelOne.badGuys.length; j++) {
-			if (levelOne.badGuys[j] != null && levelOne.badGuys[j].getHp() <= 0) levelOne.badGuys[j] = null;
+			if (levelOne.badGuys[j] != null && levelOne.badGuys[j].done) levelOne.badGuys[j] = null;
 		}
-		*/
 			
 	}
 	

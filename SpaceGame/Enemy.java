@@ -9,9 +9,11 @@ public class Enemy extends Rectangle {
 
 	int dx, dy, speed = 5;
 	int hp;
+	int boomCount = 0;
 	double theta;
 	boolean isBoom = false;
 	boolean dying = false;
+	boolean done = false;
 	Color c = Color.RED;
 	Boom boom;
 	BufferedImage image;
@@ -26,16 +28,20 @@ public class Enemy extends Rectangle {
 		
 		this.translate(dx, dy);
 		this.hit();
-		if (this.getHp() <= 0 && !this.isBoom) {
+		if (this.hp <= 0) this.dying = true;
+		
+		if (this.hp <= 0 && !this.isBoom) {
+			boom = new Boom(this);
 			this.setSize(0, 0);
 			this.dying = true;
-			boom = new Boom(this);
 			this.isBoom = true;
 			System.out.println("Dying");
 		}
+		
 		if (this.dying) {
 			this.boom.update();
 		}
+		
 
 	}
 
@@ -46,13 +52,14 @@ public class Enemy extends Rectangle {
 			win.fill(this);
 			win.setColor(Color.WHITE);
 			win.draw(this);
-		} else if (this.getHp() > 0) {
+		} else if (this.hp > 0) {
 			win.drawImage(image, null, this.x, this.y);
 		}
 
-		if (this.dying) {
+		if (this.dying && this.boom != null) {
 			boom.draw(win);
-			System.out.println("Particle Drawing.");
+			this.done = this.boomDone();
+			System.out.println("Booming.");
 		}
 
 	}
@@ -76,10 +83,16 @@ public class Enemy extends Rectangle {
 		}
 		// System.out.println("Hit Detection");
 
-	}	
-
-	public int getHp() {
-		return this.hp;
+	}
+	
+	public boolean boomDone() {
+		
+		int count = 0;
+		for (Particle p : this.boom.parts) {
+			if (p == null) count++;
+		}
+		return (count == 50);
+		
 	}
 
 }
