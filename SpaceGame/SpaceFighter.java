@@ -9,12 +9,16 @@ import Utilities.Menu;
 public class SpaceFighter extends GDV5 {
 
 	int gameState;
-	int points;
+	static int currentTime = 1;
+	int gasLossInterval = 60;
+	// int shootTimer = 180;
+	static int score;
 	static Ship ship = new Ship();
 	Menu menu = new Menu();
 	Space space = new Space();
-	Mothership levelOne = new Mothership(1);
-	Laser laser;
+	static Mothership one = new Mothership(1);
+	static Mothership two = new Mothership(2);
+	static Mothership three = new Mothership(3);
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -28,8 +32,8 @@ public class SpaceFighter extends GDV5 {
 
 	public SpaceFighter() {
 
-		gameState = 1;
-		points = 0;
+		this.gameState = 3;
+		score = 0;
 		this.menu.setTitle("Space Shooter Game");
 		this.menu.setIns("Instructions Here");
 
@@ -45,13 +49,34 @@ public class SpaceFighter extends GDV5 {
 				GDV5.KeysTyped[KeyEvent.VK_SPACE] = false;
 			}
 		}
-
-		if (gameState == 1) {
-			// space.update(this.getHeight());
-			levelOne.update();
+		
+		if (gameState >= 1) {
+			if (timer(currentTime, this.gasLossInterval)) ship.gas--;
+			if (ship.gas == 0) gameState = -1;
+			space.update(this.getHeight());
 			ship.update();
 		}
+
+		if (gameState == 1) {
+			one.update();
+		}
 		
+		if (gameState == 2) {
+			two.update();
+		}
+		
+		if (gameState == 3) {
+			three.update();
+		}
+		
+		if (gameState == -1) {
+			if (GDV5.KeysTyped[KeyEvent.VK_ENTER]) {
+				this.reset();
+				GDV5.KeysTyped[KeyEvent.VK_ENTER] = false;
+			}
+		}
+		
+		currentTime++;
 		this.cleanUp();
 
 	}
@@ -63,14 +88,28 @@ public class SpaceFighter extends GDV5 {
 		if (gameState == 0) {
 			menu.printTitleScreen(win);
 		}
-
-		if (gameState == 1) {
-			levelOne.draw(win);
+		
+		if (gameState >= 1) {
+			// space.draw(win);
 			ship.draw(win);
+			menu.drawScore(win, score);
+			menu.drawGas(win, ship.gas);
+		}
+		
+		if (gameState == 1) {
+			one.draw(win);
+		}
+		
+		if (gameState == 2) {
+			two.draw(win);
+		}
+		
+		if (gameState == 3) {
+			three.draw(win);
 		}
 
 		if (gameState == -1) {
-			menu.printEndScreen(win, this.points);
+			menu.printEndScreen(win, score);
 		}
 
 	}
@@ -78,6 +117,7 @@ public class SpaceFighter extends GDV5 {
 	// gets rid of lasers, enemies, etc that are not needed anymore
 	public void cleanUp() {
 		
+		/*
 		for (int i = 0; i < ship.lasers.length; i++) {
 			if (ship.lasers[i] != null) {
 				if (ship.lasers[i].getX() > 800 || ship.lasers[i].getX() < 0 || ship.lasers[i].getY() < 0 || ship.lasers[i].getY() > 600) {
@@ -86,11 +126,26 @@ public class SpaceFighter extends GDV5 {
 				}
 			}
 		}
+		*/
 				
-		for (int j = 0; j < levelOne.badGuys.length; j++) {
-			if (levelOne.badGuys[j] != null && levelOne.badGuys[j].done) levelOne.badGuys[j] = null;
+		for (int j = 0; j < one.badGuys.length; j++) {
+			if (one.badGuys[j] != null && one.badGuys[j].done) one.badGuys[j] = null;
 		}
-			
+		
+		for (int k = 0; k < two.badGuys.length; k++) {
+			if (two.badGuys[k] != null && two.badGuys[k].done) two.badGuys[k] = null;
+		}
+
+	}
+	
+	public boolean timer(int current, int target) {
+		return (current % target == 0);
+	}
+	
+	public void reset() {
+		this.gameState = 0;
+		score = 0;
+		ship.gas = 50;
 	}
 	
 }

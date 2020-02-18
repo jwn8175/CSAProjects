@@ -13,7 +13,8 @@ public class Ship extends Polygon {
 
 	// fields
 
-	int dx = 0, dy = 0, speed = 5, lives = 3;
+	int dx = 0, dy = 0, speed = 6;
+	int gas = 9999;
 	Laser[] lasers = new Laser[10];
 	int laserIndex = 0;
 	Polygon layer1 = new Polygon();
@@ -33,18 +34,18 @@ public class Ship extends Polygon {
 	// constructors
 	public Ship() {
 
-		double scale = 15;
+		double scale = 12;
 
 		for (int i = 0; i < points[0][0].length; i++) {
-			this.addPoint((int) (points[0][0][i] * scale + 320), (int) (points[0][1][i] * scale + 500));
+			this.addPoint((int) (points[0][0][i] * scale + 320), (int) (points[0][1][i] * scale + 425));
 		}
 
 		for (int i = 0; i < points[1][0].length; i++) {
-			layer1.addPoint((int) (points[1][0][i] * scale + 320), (int) (points[1][1][i] * scale + 500));
+			layer1.addPoint((int) (points[1][0][i] * scale + 320), (int) (points[1][1][i] * scale + 425));
 		}
 
 		for (int i = 0; i < points[2][0].length; i++) {
-			layer2.addPoint((int) (points[2][0][i] * scale + 320), (int) (points[2][1][i] * scale + 500));
+			layer2.addPoint((int) (points[2][0][i] * scale + 320), (int) (points[2][1][i] * scale + 425));
 		}
 
 	}
@@ -59,6 +60,7 @@ public class Ship extends Polygon {
 		for (int i = 0; i < lasers.length; i++) {
 			if (lasers[i] != null) {
 				lasers[i].move();
+				if (lasers[i].outOfBounds) lasers[i] = null;
 			}
 		}
 		
@@ -102,9 +104,15 @@ public class Ship extends Polygon {
 		dy = 0;
 		
 		/*
+		if (GDV5.KeysPressed[KeyEvent.VK_RIGHT]) theta += dtheta;
+		if (GDV5.KeysPressed[KeyEvent.VK_LEFT]) theta -= dtheta;
 		if (GDV5.KeysPressed[KeyEvent.VK_S]) {
 			dx = (int) (-speed * Math.sin(theta));
 			dy = (int) (speed * Math.cos(theta));
+		};
+		if (GDV5.KeysPressed[KeyEvent.VK_W]) {
+			dx = (int) (speed * Math.sin(theta));
+			dy = (int) (-speed * Math.cos(theta));
 		};
 		*/
 		if (GDV5.KeysPressed[KeyEvent.VK_A]) {
@@ -115,13 +123,6 @@ public class Ship extends Polygon {
 			dx = (int) (speed * Math.cos(theta));
 			dy = (int) (speed * Math.sin(theta));
 		};
-		if (GDV5.KeysPressed[KeyEvent.VK_W]) {
-			dx = (int) (speed * Math.sin(theta));
-			dy = (int) (-speed * Math.cos(theta));
-		};
-
-		if (GDV5.KeysPressed[KeyEvent.VK_RIGHT]) theta += dtheta;
-		if (GDV5.KeysPressed[KeyEvent.VK_LEFT]) theta -= dtheta;
 
 		this.theta %= (Math.PI * 2);
 
@@ -133,7 +134,7 @@ public class Ship extends Polygon {
 
 	public void makeLaser() {
 
-		Laser tempLaser = new Laser();
+		Laser tempLaser = new Laser(this.theta);
 		for (int i = 0; i < lasers.length; i++) {
 			if (lasers[i] == null) {
 				lasers[i] = tempLaser;
@@ -158,6 +159,16 @@ public class Ship extends Polygon {
 		hurtBox[1] = layer2.getBounds();
 		
 		return hurtBox;
+		
+	}
+	
+	public void takeDamage(Laser laser) {
+		for (Rectangle r : this.getHurtBox()) {
+			if (r.intersects(laser)) {
+				laser = null;
+				this.gas =- 10;
+			}
+		}
 		
 	}
 	

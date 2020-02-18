@@ -61,5 +61,10 @@ public class BasicEnemy extends Enemy {
 		super.draw(win);
 		
 	}
+	
+	public void shoot() {
+		
+		
+	}
 
 }

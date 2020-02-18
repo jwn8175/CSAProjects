@@ -16,30 +16,23 @@ public class AdvancedEnemy extends Enemy {
 		this.hp = 2;
 		
 		this.dy = this.speed;
-		this.c = Color.CYAN;
+		this.c = Color.decode("#d4adf7");
 		
 		this.setLocation(20, -this.height);
-		this.setSize(40, 40);
+		this.setSize(35, 35);
 		
 	}
 	
 	public void update() {
 		
 		if (!this.isFalling) {
-		
 			this.theta += this.dtheta;
 			// this.theta %= (Math.PI * 2);
-			
 			dx = (int) (10 * Math.sin(this.theta));
 			dy = (int) (7 * Math.cos(this.theta));
-			
-			
 		} else {
-			
 			if (this.y > 280) this.isFalling = false;
-			
 		}
-		
 		
 		super.update();
 		

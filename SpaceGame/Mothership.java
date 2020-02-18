@@ -5,12 +5,10 @@ import java.util.Random;
 
 public class Mothership {
 
-	Enemy[] one = new Enemy[20];
 	Enemy[] badGuys;
 	int index = 0;
 	int maxAdv = 10;
 	int adv = 0;
-	int pointsValue = 50;
 
 	public Mothership() {  
 
@@ -28,6 +26,19 @@ public class Mothership {
 				index %= badGuys.length;
 			}
 			// System.out.println("This happened.");
+		}
+		
+		if (code == 2) {
+			this.badGuys = new Enemy[3];
+			this.badGuys[0] = new CrazyEnemy(300);
+			this.badGuys[1] = new CrazyEnemy(250);
+			this.badGuys[2] = new AdvancedEnemy();
+			// this.badGuys[3] = new AdvancedEnemy();
+		}
+		
+		if (code == 3) {
+			this.badGuys = new Enemy[1];
+			this.badGuys[0] = new Boss();
 		}
 		
 	}

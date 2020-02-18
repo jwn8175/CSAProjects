@@ -11,6 +11,7 @@ public class Enemy extends Rectangle {
 	int hp;
 	int boomCount = 0;
 	double theta;
+	double face;
 	boolean isBoom = false;
 	boolean dying = false;
 	boolean done = false;
@@ -19,9 +20,7 @@ public class Enemy extends Rectangle {
 	BufferedImage image;
 
 	public Enemy() {
-
 		super(0, 0, 10, 10);
-
 	}
 
 	public void update() {
@@ -32,6 +31,7 @@ public class Enemy extends Rectangle {
 		
 		if (this.hp <= 0 && !this.isBoom) {
 			boom = new Boom(this);
+			SpaceFighter.score += 50;
 			this.setSize(0, 0);
 			this.dying = true;
 			this.isBoom = true;
@@ -59,7 +59,7 @@ public class Enemy extends Rectangle {
 		if (this.dying && this.boom != null) {
 			boom.draw(win);
 			this.done = this.boomDone();
-			System.out.println("Booming.");
+			// System.out.println("Booming.");
 		}
 
 	}
