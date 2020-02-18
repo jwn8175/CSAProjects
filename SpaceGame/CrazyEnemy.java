@@ -32,8 +32,8 @@ public class CrazyEnemy extends Enemy {
 	public void update() {
 		
 		this.face = this.getFace();
-		this.dx = (int) (5 * Math.sin(this.theta));
-		this.dy = - (int) (5 * Math.sin(this.theta) * Math.cos((this.theta)));
+		this.dx = (int) (this.speed * Math.sin(this.theta));
+		this.dy = - (int) (this.speed * Math.sin(this.theta) * Math.cos((this.theta)));
 		this.theta += this.dtheta;
 		this.theta %= Math.PI * 2;
 		
@@ -47,12 +47,12 @@ public class CrazyEnemy extends Enemy {
 				lasers[i].move();
 				if (lasers[i].outOfBounds) {
 					lasers[i] = null;
-					System.out.println("Laser Gone");
+					// System.out.println("Laser Gone");
 				}
 			}
 		}
 		
-		this.translate(dx, dy);
+		// this.translate(dx, dy);
 		super.update();
 
 	}
@@ -84,22 +84,15 @@ public class CrazyEnemy extends Enemy {
 	
 	public void shoot() {
 		
-		Laser pew = new EnemyLaser(this.getFace(), this);
+		Laser tempLaser = new EnemyLaser(this.getFace(), this);
 		// pew.setColor(Color.YELLOW);
 		
 		for (int i = 0; i < this.lasers.length; i++) {
 			if (lasers[i] == null) {
-				lasers[i] = pew;
+				lasers[i] = tempLaser;
 				return;
 			}
 		}
-	}
-	
-	public double getFace() {
-		double deltaY = SpaceFighter.ship.getBounds().getCenterY() - this.getBounds().getCenterY();
-		double deltaX = SpaceFighter.ship.getBounds().getCenterX() - this.getBounds().getCenterX();
-		double angle = Math.atan2(deltaY, deltaX);
-		return angle;
 	}
 
 }

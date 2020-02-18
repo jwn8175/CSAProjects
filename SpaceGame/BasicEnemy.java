@@ -15,7 +15,7 @@ public class BasicEnemy extends Enemy {
 		
 		this.hp = 1;
 		this.dy = this.speed;
-		
+		this.pointValue = 5;
 		Random r= new Random();
 		int newX = r.nextInt(600) + 80;
 		this.setLocation(newX, -this.height);

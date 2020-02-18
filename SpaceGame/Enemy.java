@@ -9,6 +9,7 @@ public class Enemy extends Rectangle {
 
 	int dx, dy, speed = 5;
 	int hp;
+	int pointValue;
 	int boomCount = 0;
 	double theta;
 	double face;
@@ -25,13 +26,11 @@ public class Enemy extends Rectangle {
 
 	public void update() {
 		
-		this.translate(dx, dy);
-		this.hit();
 		if (this.hp <= 0) this.dying = true;
 		
 		if (this.hp <= 0 && !this.isBoom) {
 			boom = new Boom(this);
-			SpaceFighter.score += 50;
+			SpaceFighter.score += pointValue;
 			this.setSize(0, 0);
 			this.dying = true;
 			this.isBoom = true;
@@ -42,7 +41,9 @@ public class Enemy extends Rectangle {
 			this.boom.update();
 		}
 		
-
+		this.hit();
+		this.translate(dx, dy);
+		
 	}
 
 	public void draw(Graphics2D win) {
@@ -83,6 +84,13 @@ public class Enemy extends Rectangle {
 		}
 		// System.out.println("Hit Detection");
 
+	}
+	
+	public double getFace() {
+		double deltaY = SpaceFighter.ship.getBounds().getCenterY() - this.getBounds().getCenterY();
+		double deltaX = SpaceFighter.ship.getBounds().getCenterX() - this.getBounds().getCenterX();
+		double angle = Math.atan2(deltaY, deltaX);
+		return angle;
 	}
 	
 	public boolean boomDone() {

@@ -116,17 +116,6 @@ public class SpaceFighter extends GDV5 {
 	
 	// gets rid of lasers, enemies, etc that are not needed anymore
 	public void cleanUp() {
-		
-		/*
-		for (int i = 0; i < ship.lasers.length; i++) {
-			if (ship.lasers[i] != null) {
-				if (ship.lasers[i].getX() > 800 || ship.lasers[i].getX() < 0 || ship.lasers[i].getY() < 0 || ship.lasers[i].getY() > 600) {
-					ship.lasers[i] = null;
-					// System.out.println("Laser Gone");
-				}
-			}
-		}
-		*/
 				
 		for (int j = 0; j < one.badGuys.length; j++) {
 			if (one.badGuys[j] != null && one.badGuys[j].done) one.badGuys[j] = null;
@@ -134,6 +123,10 @@ public class SpaceFighter extends GDV5 {
 		
 		for (int k = 0; k < two.badGuys.length; k++) {
 			if (two.badGuys[k] != null && two.badGuys[k].done) two.badGuys[k] = null;
+		}
+		
+		for (int k = 0; k < three.badGuys.length; k++) {
+			if (three.badGuys[k] != null && three.badGuys[k].done) three.badGuys[k] = null;
 		}
 
 	}

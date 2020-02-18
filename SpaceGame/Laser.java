@@ -17,7 +17,8 @@ public class Laser extends Rectangle {
 	public Laser() {
 
 	}
-
+	
+	// for ship laser
 	public Laser(double ptheta) {
 		super(0, 0, 5, 5);
 

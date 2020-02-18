@@ -103,7 +103,7 @@ public class Ship extends Polygon {
 		dx = 0;
 		dy = 0;
 		
-		/*
+		
 		if (GDV5.KeysPressed[KeyEvent.VK_RIGHT]) theta += dtheta;
 		if (GDV5.KeysPressed[KeyEvent.VK_LEFT]) theta -= dtheta;
 		if (GDV5.KeysPressed[KeyEvent.VK_S]) {
@@ -114,7 +114,7 @@ public class Ship extends Polygon {
 			dx = (int) (speed * Math.sin(theta));
 			dy = (int) (-speed * Math.cos(theta));
 		};
-		*/
+		
 		if (GDV5.KeysPressed[KeyEvent.VK_A]) {
 			dx = (int) (-speed * Math.cos(theta));
 			dy = (int) (-speed * Math.sin(theta));
