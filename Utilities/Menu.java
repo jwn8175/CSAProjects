@@ -35,6 +35,29 @@ public class Menu {
 		this.instructions = ins;
 	}
 	
+	public void drawGas(Graphics2D win, int gas) {
+		win.setColor(Color.WHITE);
+		win.setFont(menuFont);
+		String s = "Gas: " + Integer.toString(gas);
+		win.drawString(s, 10, 580);
+	}
+	
+	public void drawLives(Graphics2D win, int lives) {
+		win.setColor(Color.WHITE);
+		win.setFont(menuFont);
+		String s = "Lives: " + Integer.toString(lives);
+		win.drawString(s, 10, 590);
+		// System.out.println("Drawing Score.");
+	}
+	
+	public void drawScore(Graphics2D win, int score) {
+		win.setColor(Color.WHITE);
+		win.setFont(menuFont);
+		String s = "Score: " + Integer.toString(score);
+		win.drawString(s, 10, 550);
+		// System.out.println("Drawing Score.");
+	}
+	
 	public void drawCenteredString(Graphics2D win, String s, Font f, int y) {
 		int w = win.getFontMetrics(f).stringWidth(s);
 		int h = win.getFontMetrics(f).getHeight();
