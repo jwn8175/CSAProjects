@@ -14,6 +14,9 @@ public class Menu {
 	Font insFont = new Font("Helvetica", Font.PLAIN, 15);
 	String title;
 	String instructions;
+	String instructions1;
+	String instructions2;
+	String instructions3;
 	String author = "Game by Jay Ni";
 	String replay = "Press Enter to Play Again";
 	
@@ -66,15 +69,27 @@ public class Menu {
 		
 	}
 	
-	public void printTitleScreen(Graphics2D win) {
+	public void printSpaceGameTitleScreen(Graphics2D win) {
 		win.setColor(Color.WHITE);
 		this.drawCenteredString(win, this.title, titleFont, 200);
 		this.drawCenteredString(win, this.author, subFont, 220);
 		this.drawCenteredString(win, this.instructions, insFont, 280);
+		this.drawCenteredString(win, "Use WASD to move, Left and Right arrow keys to turn, Spacebar to fire your laser", insFont, 300);
+		this.drawCenteredString(win, "Power ups will appear periodically, reach a high enough point threshold to advance to the last level", insFont, 320);
+		this.drawCenteredString(win, "You lose if your gas reaches zero. You will also lose gas by taking damage from enemies", insFont, 340);
+		this.drawCenteredString(win, "Good luck, and beware of black holes!", insFont, 380);
+		this.drawCenteredString(win, "Press Spacebar to start", insFont, 420);
+	}
+	
+	public void printVictoryScreen(Graphics2D win, int points) {
+		win.setColor(Color.WHITE);
+		this.drawCenteredString(win, "Victory!", titleFont, 250);
+		this.drawCenteredString(win, "Your Score: " + points, insFont, 310);
+		this.drawCenteredString(win, replay, insFont, 350);
 		
 	}
 	
-	public void printEndScreen(Graphics2D win, int points) {
+	public void printGameOverScreen(Graphics2D win, int points) {
 		win.setColor(Color.WHITE);
 		this.drawCenteredString(win, "Game Over", titleFont, 250);
 		this.drawCenteredString(win, "Your Score: " + points, insFont, 310);
