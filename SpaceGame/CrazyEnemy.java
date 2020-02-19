@@ -9,10 +9,11 @@ public class CrazyEnemy extends Enemy {
 	double dtheta = Math.PI/120;
 	double theta = 0;
 	double face;
-	Laser[] lasers = new Laser[20];
+	EnemyLaser[] lasers = new EnemyLaser[20];
 
 	public CrazyEnemy() {
 
+		this.pointValue = 20;
 		this.c = Color.CYAN;
 		this.hp = 3;
 		this.setSize(30, 30);
@@ -45,7 +46,7 @@ public class CrazyEnemy extends Enemy {
 		for (int i = 0; i < this.lasers.length; i++) {
 			if (lasers[i] != null) {
 				lasers[i].move();
-				if (lasers[i].outOfBounds) {
+				if (lasers[i].outOfBounds || lasers[i].gone) {
 					lasers[i] = null;
 					// System.out.println("Laser Gone");
 				}
@@ -84,7 +85,7 @@ public class CrazyEnemy extends Enemy {
 	
 	public void shoot() {
 		
-		Laser tempLaser = new EnemyLaser(this.getFace(), this);
+		EnemyLaser tempLaser = new EnemyLaser(this.getFace(), this);
 		// pew.setColor(Color.YELLOW);
 		
 		for (int i = 0; i < this.lasers.length; i++) {

@@ -5,7 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 public class SeekerLaser extends EnemyLaser {
-
+	
+	int timer = 300;
+	
 	public SeekerLaser(double theta, Enemy e) {
 		
 		super(theta, e);
@@ -30,6 +32,10 @@ public class SeekerLaser extends EnemyLaser {
 		}
 		*/
 		super.move();
+		timer--;
+		if (timer == 0) {
+			this.gone = true;
+		}
 	}
 	
 	public void draw(Graphics2D win) {

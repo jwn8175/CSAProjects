@@ -27,7 +27,6 @@ public class Enemy extends Rectangle {
 	public void update() {
 		
 		if (this.hp <= 0) this.dying = true;
-		
 		if (this.hp <= 0 && !this.isBoom) {
 			boom = new Boom(this);
 			SpaceFighter.score += pointValue;
@@ -41,6 +40,7 @@ public class Enemy extends Rectangle {
 			this.boom.update();
 		}
 		
+		this.shipCollide();
 		this.hit();
 		this.translate(dx, dy);
 		
@@ -93,14 +93,22 @@ public class Enemy extends Rectangle {
 		return angle;
 	}
 	
-	public boolean boomDone() {
+	public void shipCollide() {
+		for (Rectangle r : SpaceFighter.ship.getHurtBox()) {
+			if (r.intersects(this)) {
+				this.hp = 0;
+				SpaceFighter.ship.gas -= 20;
+			}
+		}
 		
+	}
+	
+	public boolean boomDone() {
 		int count = 0;
 		for (Particle p : this.boom.parts) {
 			if (p == null) count++;
 		}
 		return (count == 50);
-		
 	}
 
 }

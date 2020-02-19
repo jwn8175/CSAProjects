@@ -14,7 +14,7 @@ public class Ship extends Polygon {
 	// fields
 
 	int dx = 0, dy = 0, speed = 6;
-	int gas = 9999;
+	int gas = 100;
 	Laser[] lasers = new Laser[10];
 	int laserIndex = 0;
 	Polygon layer1 = new Polygon();
@@ -75,8 +75,8 @@ public class Ship extends Polygon {
 		
 		win.setColor(Color.RED);
 		// win.draw(SpaceFighter.ship.getHitBox());
-		for (Rectangle r : this.getHurtBox()) win.draw(r);
-		
+		// for (Rectangle r : this.getHurtBox()) win.draw(r);
+		// win.draw(this.getHitBox());
 		win.setColor(Color.BLUE);
 		win.fill(this);
 
@@ -123,7 +123,19 @@ public class Ship extends Polygon {
 			dx = (int) (speed * Math.cos(theta));
 			dy = (int) (speed * Math.sin(theta));
 		};
-
+		
+		if (this.getHitBox().getMinY() <= 0) {
+			this.dy = 1;
+		}
+		if (this.getHitBox().getMaxY() >= 600) {
+			this.dy = -1;
+		}
+		if (this.getHitBox().getMinX() <= 0) {
+			this.dx = 1;
+		}
+		if (this.getHitBox().getMaxX() >= 800) {
+			this.dx = -1;
+		}
 		this.theta %= (Math.PI * 2);
 
 		this.translate(dx, dy);
@@ -162,11 +174,11 @@ public class Ship extends Polygon {
 		
 	}
 	
-	public void takeDamage(Laser laser) {
+	public void takeDamage(EnemyLaser laser) {
 		for (Rectangle r : this.getHurtBox()) {
-			if (r.intersects(laser)) {
-				laser = null;
-				this.gas =- 10;
+			if (laser != null && r.intersects(laser)) {
+				laser.gone = true;
+				this.gas -= 10;
 			}
 		}
 		

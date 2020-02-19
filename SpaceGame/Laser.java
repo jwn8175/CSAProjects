@@ -7,9 +7,7 @@ import java.awt.Rectangle;
 public class Laser extends Rectangle {
 
 	Color c;
-
 	int dx, dy;
-
 	int speed = 9;
 	double theta;
 	boolean outOfBounds = false;

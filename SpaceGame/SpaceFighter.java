@@ -11,9 +11,12 @@ public class SpaceFighter extends GDV5 {
 	int gameState;
 	static int currentTime = 1;
 	int gasLossInterval = 60;
-	// int shootTimer = 180;
+	int invulnerabilityPeriod = 90;
+	boolean invulnerability = true;
+	boolean holeActive = false;
 	static int score;
 	static Ship ship = new Ship();
+	BlackHole hole = new BlackHole();
 	Menu menu = new Menu();
 	Space space = new Space();
 	static Mothership one = new Mothership(1);
@@ -32,10 +35,10 @@ public class SpaceFighter extends GDV5 {
 
 	public SpaceFighter() {
 
-		this.gameState = 3;
+		this.gameState = 0;
 		score = 0;
 		this.menu.setTitle("Space Shooter Game");
-		this.menu.setIns("Instructions Here");
+		this.menu.setIns("Instructions: ");
 
 	}
 
@@ -52,13 +55,24 @@ public class SpaceFighter extends GDV5 {
 		
 		if (gameState >= 1) {
 			if (timer(currentTime, this.gasLossInterval)) ship.gas--;
-			if (ship.gas == 0) gameState = -1;
+			if (ship.gas <= 0) gameState = -2;
+			holeActive = ship.intersects(hole);
+			if (holeActive) {
+				ship.gas--;
+			}
 			space.update(this.getHeight());
 			ship.update();
+			hole.update();
 		}
 
 		if (gameState == 1) {
 			one.update();
+			if (score >= 150) {
+				this.invulnerabilityPeriod = 90;
+				this.invulnerability = false;
+				this.gameState = 2;
+				ship.gas = 100;
+			}
 		}
 		
 		if (gameState == 2) {
@@ -67,9 +81,10 @@ public class SpaceFighter extends GDV5 {
 		
 		if (gameState == 3) {
 			three.update();
+			if (three.badGuys[0] == null) gameState = -1;
 		}
 		
-		if (gameState == -1) {
+		if (gameState == -1 || gameState == -2) {
 			if (GDV5.KeysTyped[KeyEvent.VK_ENTER]) {
 				this.reset();
 				GDV5.KeysTyped[KeyEvent.VK_ENTER] = false;
@@ -86,11 +101,12 @@ public class SpaceFighter extends GDV5 {
 		// TODO Auto-generated method stub
 
 		if (gameState == 0) {
-			menu.printTitleScreen(win);
+			menu.printSpaceGameTitleScreen(win);
 		}
 		
 		if (gameState >= 1) {
-			// space.draw(win);
+			space.draw(win);
+			hole.draw(win);
 			ship.draw(win);
 			menu.drawScore(win, score);
 			menu.drawGas(win, ship.gas);
@@ -109,7 +125,11 @@ public class SpaceFighter extends GDV5 {
 		}
 
 		if (gameState == -1) {
-			menu.printEndScreen(win, score);
+			menu.printVictoryScreen(win, score);
+		}
+		
+		if (gameState == -2) {
+			menu.printGameOverScreen(win, score);
 		}
 
 	}
@@ -138,7 +158,10 @@ public class SpaceFighter extends GDV5 {
 	public void reset() {
 		this.gameState = 0;
 		score = 0;
-		ship.gas = 50;
+		ship = new Ship();
+		one = new Mothership(1);
+		two = new Mothership(2);
+		three = new Mothership(3);
 	}
 	
 }
